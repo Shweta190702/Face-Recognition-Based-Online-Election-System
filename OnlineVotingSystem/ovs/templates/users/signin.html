@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Signin</title>
+    <!--<link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css"> -->
+    <link href="{% static 'users/css/bootstrap.css' %}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="{% static 'users/js/main.js' %}"></script>
+    <link href="{% static 'users/css/style.css' %}" rel="stylesheet" />
+    <script src="{% static 'users/js/jquery.js' %}"></script>
+    <script src="{% static 'users/js/bootstrap.js' %}"></script>
+  </head>
+  <body>
+    {% load static %}
+    <div
+      class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark"
+      id="main-navbar"
+    >
+      <div class="container" style="height: 90px">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'home' %}"
+            ><img
+              src="{% static 'users/img/R.png' %}"
+              alt=""
+              style="height: 75px; margin: -7px"
+          /></a>
+        </div>
+        <div
+          class="collapse navbar-collapse"
+          id="myNavbar"
+          style="margin: 17px"
+        >
+          <ul class="nav navbar-nav navbar-right" style="font-size: 20px">
+            {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'profile' %}"
+                ><span class="glyphicon glyphicon-user"></span> Profile
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'signout' %}"
+                ><span class="glyphicon glyphicon-log-out"></span> Logout
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% url 'signup' %}"
+                ><span class="fa fa-user-plus"></span> Create Account
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'signin' %}"
+                ><span class="glyphicon glyphicon-log-in"></span> Log In</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div style="margin-top: 100px"></div>
+
+    {% if error%}
+    <div
+      class="alert alert-danger col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+      role="alert"
+    >
+      {{error}}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <br /><br /><br /><br /><br /><br />
+    {% endif %}
+    <center>
+      <div
+        class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+      >
+        <h3 id="cameraMessage"></h3>
+      </div>
+      <br /><br /><br /><br />
+    </center>
+    <div id="content" style="margin-top: 20px">
+      <div class="container-fluid decor_bg" id="login-panel">
+        <div class="row">
+          <div
+            class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+          >
+            <div class="panel panel-primary" style="opacity: 0.9">
+              <div class="panel-heading" style="">
+                <center>
+                  <h4>Sign In</h4>
+                </center>
+              </div>
+              <div class="panel-body">
+                <p class="text-warning"><i>Every field is mandatory *</i></p>
+                <p></p>
+                <form
+                  role="form"
+                  id="userSignIn"
+                  action="/signin"
+                  method="POST"
+                >
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label class="control-label">Username *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="username"
+                      placeholder="Enter your username"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Password *</label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      id="pass1"
+                      name="pass1"
+                      placeholder="Enter your password"
+                      required
+                    />
+                  </div>
+                  <center>
+                    <div class="col-md-8 col-md-offset-2">
+                      <button
+                        id="signInButton"
+                        type="submit"
+                        name="submit"
+                        class="btn btn-primary btn-lg btn-block"
+                      >
+                        Sign In</button
+                      ><br />
+                    </div>
+                  </center>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

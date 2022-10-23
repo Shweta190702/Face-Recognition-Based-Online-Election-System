@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Profile</title>
+    <!--<link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css"> -->
+    <link href="{% static 'users/css/bootstrap.css' %}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link href="{% static 'users/css/style.css' %}" rel="stylesheet" />
+    <script src="{% static 'users/js/jquery.js' %}"></script>
+    <script src="{% static 'users/js/bootstrap.js' %}"></script>
+  </head>
+  <body>
+    {% load static %}
+    <div
+      class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark"
+      id="main-navbar"
+    >
+      <div class="container" style="height: 90px">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'home' %}"
+            ><img
+              src="{% static 'users/img/R.png' %}"
+              alt=""
+              style="height: 75px; margin: -7px"
+          /></a>
+        </div>
+        <div
+          class="collapse navbar-collapse"
+          id="myNavbar"
+          style="margin: 17px"
+        >
+          <ul class="nav navbar-nav navbar-right" style="font-size: 20px">
+            {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'profile' %}"
+                ><span class="glyphicon glyphicon-user"></span> Profile
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'vote' %}"
+                ><span class="glyphicon glyphicon-user"></span> Vote
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'signout' %}"
+                ><span class="glyphicon glyphicon-log-out"></span> Logout
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% url 'signup' %}"
+                ><span class="fa fa-user-plus"></span> Create Account
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'signin' %}"
+                ><span class="glyphicon glyphicon-log-in"></span> Log In</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    
+    <div class="container" style="padding-top:180px">
+        <div class="row">
+            <div class="col md-12">
+                 <div class="jumbotron p-3" align="center">
+                  <!--<H2>Thank You, You Have Voted Successfully</H2>-->
+                   {% if msg %}
+                    <H2>{{msg}}</H2>
+                   {% endif %}
+                 </div>
+            </div>
+        </div>
+    </div>
+    <br />
+  </body>
+</html>

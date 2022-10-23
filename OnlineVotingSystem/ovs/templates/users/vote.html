@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Profile</title>
+        <!--<link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css"> -->
+        <link href="{% static 'users/css/bootstrap.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
+        <script src="{% static 'users/js/jquery.js' %}"></script>
+        <script src="{% static 'users/js/bootstrap.js' %}"></script>
+        <!-- <script src="{% static 'users/js/vote.js' %}"></script> -->
+    </head>
+    <body>
+    {% load static %}
+    <!-- <p><b>:</b>{{ user.userprofile.user_id }}</p> -->
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
+            <div class="container" style="height: 90px">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'users/img/R.png' %}" alt="" style="height:75px; margin:-7px"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar" style="margin:17px">
+                    <ul class="nav navbar-nav navbar-right" style="font-size: 20px;">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' %}"><span class = "glyphicon glyphicon-user"></span> Profile </a></li>
+                            <li><a href="{% url 'vote' %}"><span class = "glyphicon glyphicon-user"></span> Vote </a></li>
+                            <li><a href="{% url 'signout' %}"><span class = "glyphicon glyphicon-log-out"></span> Logout </a></li>
+                        {% else %}
+                            <li><a href="{% url 'signup' %}"><span class = "fa fa-user-plus"></span> Create Account </a></li>
+                            <li><a href="{% url 'signin' %}"><span class = "glyphicon glyphicon-log-in"></span> Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div><br>
+
+        <div class="container" style="padding-top:90px">
+            <div class="row">
+                <div class="col md-12">
+                     <div class="jumbotron p-3">
+                         <!-- <h2><b>Voting Portal </b>  <button type="button" class="btn btn-success" style="float: right; margin:5px;" data-toggle="modal" data-target="#myvote">Give Vote</button> </h2> -->
+                         <br>
+                         <form action="/giveVote" method="POST">
+                            {% csrf_token %}
+                         <table class="table">
+                             <tr>
+                                 <th>ID</th>
+                                 <th>Party Name</th>
+                                 <th>Party Symbol</th>
+                                 <th>Select</th>
+                             </tr>
+                             {% for row in Party %}
+                             <tr>
+                                 <td>{{row.id}}</td>
+                                 <td>{{row.party_name}}</td>
+                                 {% if row.party_symbol %}
+                                    <td>
+                                        <img src="{{ row.party_symbol.url }}" style="height: 50px; width: 50px" alt="" class="prod-size">
+                                    </td>
+                                 {% else %}
+                                    <td>No Image Found</td>
+                                 {% endif %}
+                                 <td><input type="radio" id="{{row.id}}" name="selectedParty" value="{{row.id}}" style="border: 1px;
+                                    width: 100%;
+                                    height: 2em;" required></td>
+                             </tr>
+                             {% endfor %}
+                         </table>
+                         <button onclick="" class="btn btn-success" type="submit" style="float: right; margin:5px;">Give Vote</button>
+                        </form>
+                        <!--<button onclick="display()" class="btn btn-success" type="" style="float: right; margin:5px;">display</button> -->
+                     </div>
+                </div>
+             </div>
+        </div>
+        <script>
+
+            function display(){
+                const user_id = document.getElementById("user_id").value;
+                console.log(user_id)
+            }
+
+            function giveVote() {
+            const partyId = document.querySelector(
+                'input[name="selectedParty"]:checked'
+            ).value;
+
+            console.log(partyId);
+            const data = {
+                csrfmiddlewaretoken: "{{csrf_token}}",
+                // user_id : user_id,
+                selectedParty: partyId,
+                user_id : user_id
+            };
+            console.log(data)
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "/giveVote", true);
+            xhr.setRequestHeader("X-CSRFToken", "{{csrf_token}}");
+            // console.log()
+            xhr.send(JSON.stringify(data));
+            console.log("req sent...");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == XMLHttpRequest.DONE) {
+                const serverResponse = JSON.parse(xhr.response);
+                alert(serverResponse.message);
+                }
+            };
+            }
+
+            window.addEventListener("DOMContentLoaded", () => {
+            console.log("load hua");
+            });
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Profile</title>
+        <!--<link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css"> -->
+        <link href="{% static 'users/css/bootstrap.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
+        <script src="{% static 'users/js/jquery.js' %}"></script>
+        <script src="{% static 'users/js/bootstrap.js' %}"></script>
+        <style>
+            .card {
+                box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+                max-width: 400px;
+                margin: auto;
+                text-align: center;
+                font-family: arial;
+            }
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                border: 1px solid #ddd;
+            }
+            th, td {
+                text-align: left;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+    {% load static %}
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
+            <div class="container" style="height: 90px">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'users/img/R.png' %}" alt="" style="height:75px; margin:-7px"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar" style="margin:17px">
+                    <ul class="nav navbar-nav navbar-right" style="font-size: 20px;">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' %}"><span class = "glyphicon glyphicon-user"></span> Profile </a></li>
+                            <li><a href="{% url 'vote' %}"><span class = "glyphicon glyphicon-user"></span> Vote </a></li>
+                            <li><a href="{% url 'signout' %}"><span class = "glyphicon glyphicon-log-out"></span> Logout </a></li>
+                        {% else %}
+                            <li><a href="{% url 'signup' %}"><span class = "fa fa-user-plus"></span> Create Account </a></li>
+                            <li><a href="{% url 'signin' %}"><span class = "glyphicon glyphicon-log-in"></span> Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div><br>
+        <div class="container" style="margin-top:120px">
+            <!--
+            <p>
+                <p><b>ID:</b>{{ user.userprofile.user_id }}</p>
+                <p><b>Voter ID:</b>{{ user.userprofile.vid }}</p>
+                <p><b>First name:</b>{{ user.first_name }}</p>
+                <p><b>Last_name:</b>{{ user.last_name }}</p>
+                <p><b>Age:</b>{{ user.userprofile.age }}</p>
+                <p><b>Gender:</b>{{ user.userprofile.gender }}</p>
+                <p><b>Phone:</b>{{ user.userprofile.phone }}</p>
+                <p><b>Email Id:</b>{{ user.email }}</p>
+                <p><b>Address:</b>{{ user.userprofile.address }}</p>
+            </p>
+            <br>
+                 <img src="media/{{user.userprofile.head_shot.name}}" width="220"/>
+                 -->
+            <div class="card">
+                <center>
+                    <table>
+                        <tr>
+                            <img src="media/{{user.userprofile.head_shot.name}}" alt="Profile Picture" style="width:100%; padding: 10px; border: 2px solid #000"/>
+                        </tr>
+                        <tr>
+                            <th>ID</th>
+                            <td>{{ user.userprofile.user_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Voter ID</th>
+                            <td>{{ user.userprofile.vid }}</td>
+                        </tr>
+                        <tr>
+                            <th>First Name</th>
+                            <td>{{ user.first_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Last Name</th>
+                            <td>{{ user.last_name }}</td>
+                        </tr>
+                        <tr>
+                            <th>Age</th>
+                            <td>{{ user.userprofile.age }}</td>
+                        </tr>
+                        <tr>
+                            <th>Gender</th>
+                            <td>{{ user.userprofile.gender }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone</th>
+                            <td>{{ user.userprofile.phone }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email Id</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Address</th>
+                            <td>{{ user.userprofile.address }}</td>
+                        </tr>
+                    </table>
+                </center>
+            </div>
+            <br><br>
+        </div>
+    </body>
+</html>

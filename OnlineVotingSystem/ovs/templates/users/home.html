@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Home</title>
+        <!--<link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css"> -->
+        <link href="{% static 'users/css/bootstrap.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="{% static 'users/css/style.css' %}" rel="stylesheet">
+        <script src="{% static 'users/js/jquery.js' %}"></script>
+        <script src="{% static 'users/js/bootstrap.js' %}"></script>
+		<style>
+		    .banner_image {
+    		    padding-bottom: 41px;
+    		    width: 100%;
+    		    text-align: center;
+    		    color: #f8f8f8;
+		    }
+
+		    .banner_content {
+    		    position: relative;
+    		    padding-top: 6%;
+    		    padding-bottom: 6%;
+    		    margin-top: 20%;
+    		    margin-bottom: 12%;
+    		    background-color: rgba(0, 0, 0, 0.8);
+   		        max-width: 660px;
+		    }
+
+		    /* Fading animation */
+            .fade {
+              -webkit-animation-name: fade;
+              -webkit-animation-duration: 3s;
+              animation-name: fade;
+              animation-duration: 3s;
+            }
+
+            @-webkit-keyframes fade {
+              from {opacity: .3}
+              to {opacity: 1}
+            }
+
+            @keyframes fade {
+              from {opacity: .3}
+              to {opacity: 1}
+            }
+
+            /* On smaller screens, decrease text size */
+            @media only screen and (max-width: 300px) {
+              .text {font-size: 11px}
+            }
+		</style>
+    </head>
+    <body>
+    {% load static %}
+        <div class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark" id="main-navbar">
+            <div class="container" style="height: 90px">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'users/img/R.png' %}" alt="" style="height:75px; margin:-7px"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar" style="margin:17px">
+                    <ul class="nav navbar-nav navbar-right" style="font-size: 20px;">
+                        {% if user.is_authenticated %}
+                            <li><a href="{% url 'profile' %}"><span class = "glyphicon glyphicon-user"></span> Profile </a></li>
+                            <li><a href="{% url 'vote' %}"><span class = "glyphicon glyphicon-user"></span> Vote </a></li>
+                            <li><a href="{% url 'signout' %}"><span class = "glyphicon glyphicon-log-out"></span> Logout </a></li>
+                        {% else %}
+                            <li><a href="{% url 'signup' %}"><span class = "fa fa-user-plus"></span> Create Account </a></li>
+                            <li><a href="{% url 'signin' %}"><span class = "glyphicon glyphicon-log-in"></span> Log In</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div><br>
+       <div id="content">
+            <div class="banner_image fade" style="background: url({% static 'users/img/election1.png' %}) no-repeat center center; background-size: cover; height:100%; margin-top:70px">
+                <div class="container">	
+                    <center>
+                        <div class="banner_content">
+                            <h1><u>Face Recognition Based</u></h1>
+                            <h2>Online Voting System</h2>
+                            <br/>
+                        </div>
+                    </center>
+                </div>
+            </div>
+
+           <div class="banner_image fade" style="background: url({% static 'users/img/election2.jpeg' %}) no-repeat center center; background-size: cover; height:100%; margin-top:70px">
+                <div class="container">
+                    <center>
+                        <div class="banner_content">
+                            <h1><u>Face Recognition Based</u></h1>
+                            <h2>Online Voting System</h2>
+                            <br/>
+                        </div>
+                    </center>
+                </div>
+            </div>
+
+           <div class="banner_image fade" style="background: url({% static 'users/img/election3.jpg' %}) no-repeat center center; background-size: cover; height:100%; margin-top:70px">
+                <div class="container">
+                    <center>
+                        <div class="banner_content">
+                            <h1><u>Face Recognition Based</u></h1>
+                            <h2>Online Voting System</h2>
+                            <br/>
+                        </div>
+                    </center>
+                </div>
+            </div>
+
+        </div>
+        <footer style="margin-top:-3px">
+            <div class="container" align="center" style="margin-top:5px">
+                <i>Footer Area</i>
+            </div>
+        </footer>
+    <script>
+        var slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+          var i;
+          var slides = document.getElementsByClassName("banner_image");
+          for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+          }
+          slideIndex++;
+          if (slideIndex > slides.length) {slideIndex = 1}
+
+          slides[slideIndex-1].style.display = "block";
+          setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+    </script>
+    </body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Signup</title>
+    <!--<link rel="stylesheet" href="{% static 'users/css/main.css' %}" type="text/css"> -->
+    <link href="{% static 'users/css/bootstrap.css' %}" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link href="{% static 'users/css/style.css' %}" rel="stylesheet" />
+    <script src="{% static 'users/js/jquery.js' %}"></script>
+    <script src="{% static 'users/js/bootstrap.js' %}"></script>
+    <script src="{% static 'users/js/validate.js' %}"></script>
+  </head>
+  <body>
+    {% load static %}
+    <div
+      class="navbar navbar-inverse navbar-fixed-top navbar-expand-lg navbar-dark bg-dark"
+      id="main-navbar"
+    >
+      <div class="container" style="height: 90px">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="{% url 'home' %}"
+            ><img
+              src="{% static 'users/img/R.png' %}"
+              alt=""
+              style="height: 75px; margin: -7px"
+          /></a>
+        </div>
+        <div
+          class="collapse navbar-collapse"
+          id="myNavbar"
+          style="margin: 17px"
+        >
+          <ul class="nav navbar-nav navbar-right" style="font-size: 20px">
+            {% if user.is_authenticated %}
+            <li>
+              <a href="{% url 'profile' %}"
+                ><span class="glyphicon glyphicon-user"></span> Profile
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'signout' %}"
+                ><span class="glyphicon glyphicon-log-out"></span> Logout
+              </a>
+            </li>
+            {% else %}
+            <li>
+              <a href="{% url 'signup' %}"
+                ><span class="fa fa-user-plus"></span> Create Account
+              </a>
+            </li>
+            <li>
+              <a href="{% url 'signin' %}"
+                ><span class="glyphicon glyphicon-log-in"></span> Log In</a
+              >
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    <br />
+    <div style="margin-top: 100px"></div>
+    {% if error %}
+    <div
+      class="alert alert-danger col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+      role="alert"
+    >
+      {{error}}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <br /><br /><br /><br /><br /><br />
+    {% endif %} {% if success %}
+    <div
+      class="alert alert-success col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+      role="alert"
+    >
+      {{success}}
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <br /><br /><br /><br /><br /><br />
+    {% endif %}
+    <!--
+        {% for message in messages %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>Message:</strong> {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+-->
+    <div id="content" style="padding-top: 20px">
+      <div class="container-fluid decor_bg" id="login-panel">
+        <div class="row">
+          <div
+            class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3"
+          >
+            <div class="panel panel-primary" style="opacity: 0.9">
+              <div class="panel-heading" style="background-color: #">
+                <center>
+                  <h4>Sign Up</h4>
+                </center>
+              </div>
+              <div class="panel-body">
+                <p class="text-warning"><i>Every field is mandatory *</i></p>
+                <p></p>
+                <form role="form" action="/signup" method="POST">
+                  {% csrf_token %}
+                  <!--<div class="form-group">
+                    <label class="control-label">Voter ID Number *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="vid"
+                      name="vid"
+                      placeholder="Enter Voter ID Number"
+                    />
+                    <p id="vidCheck" class="text-danger">
+                      Voter ID Number must be of 10 characters
+                    </p>
+                  </div>-->
+                  <div class="form-group">
+                    <label class="control-label">Username *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="username"
+                      name="username"
+                      placeholder="Create a username"
+                      required
+                    />
+                    <p id="usernameCheck" class="text-danger">
+                      Username has to be of 10 characters
+                    </p>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">First Name *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="fname"
+                      name="fname"
+                      placeholder="Enter Your First Name"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Last Name *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="lname"
+                      name="lname"
+                      placeholder="Enter Your Last Name"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Age *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="age"
+                      name="age"
+                      placeholder="Enter Your Age"
+                      required
+                    />
+                    <p id="ageCheck" class="text-danger">
+                      Age must be greater than 18
+                    </p>
+                  </div>
+                  <div class="form-group dropdown">
+                    <label class="control-label">Gender *</label>
+                    <label for="gender"></label>
+                    <select name="gender" id="gender" class="btn btn-default dropdown-toggle">
+                      <option selected="selected">Select</option>
+                      <option value="female">Female</option>
+                      <option value="male">Male</option>
+                      <option value="others">Others</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Email Address *</label>
+                    <input
+                      class="form-control"
+                      type="email"
+                      id="email"
+                      name="email"
+                      placeholder="Enter Your Email Address"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Phone *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="phone"
+                      name="phone"
+                      placeholder="Enter Your Phone Number"
+                      required
+                    />
+                    <p id="phoneCheck" class="text-danger">
+                      Phone Number must be of 10 digits
+                    </p>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Address *</label>
+                    <input
+                      class="form-control"
+                      type="text"
+                      id="address"
+                      name="address"
+                      placeholder="Enter Your Address"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Photo *</label>
+                    <input
+                      class="form-control"
+                      accept="image/*"
+                      type="file"
+                      id="photo"
+                      name="photo"
+                      placeholder="Upload File"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Password *</label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      id="pass1"
+                      name="pass1"
+                      placeholder="Create a Password"
+                      minlength="6"
+                      maxlength="20"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label">Confirm Password *</label>
+                    <input
+                      class="form-control"
+                      type="password"
+                      id="pass2"
+                      name="pass2"
+                      placeholder="Confirm Your Password"
+                      minlength="6"
+                      maxlength="20"
+                      required
+                    />
+                    <p id="paswdCheck" class="text-danger">
+                      Password and Confirm Password must be same
+                    </p>
+                  </div>
+                  <center>
+                    <div class="col-md-8 col-md-offset-2">
+                      <button
+                        type="submit"
+                        name="submit"
+                        class="btn btn-primary btn-lg btn-block"
+                      >
+                        Register</button
+                      ><br />
+                    </div>
+                  </center>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
